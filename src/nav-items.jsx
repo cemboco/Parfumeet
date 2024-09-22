@@ -1,5 +1,6 @@
 import { HomeIcon, SearchIcon, UserIcon } from "lucide-react";
 import Index from "./pages/Index.jsx";
+import Profile from "./pages/Profile.jsx";
 
 export const navItems = [
   {
@@ -18,6 +19,6 @@ export const navItems = [
     title: "Profile",
     to: "/profile",
     icon: <UserIcon className="h-4 w-4" />,
-    page: <div>Profile Page</div>, // Placeholder for now
+    page: <Profile />,
   },
 ];
