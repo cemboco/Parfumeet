@@ -9,7 +9,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center">
-              <img src="/parfumeet-logo.png" alt="Parfumeet Logo" className="h-8 w-auto" />
+              <img src="/Parfumeet.png" alt="Parfumeet Logo" className="h-8 w-auto" />
             </Link>
           </div>
           <div className="flex items-center">
