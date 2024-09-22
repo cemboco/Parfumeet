@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Camera } from "lucide-react";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -46,13 +47,17 @@ const Profile = () => {
           className="w-32 h-32 rounded-full object-cover"
         />
         {isEditing && (
-          <Input
-            type="file"
-            name="profilePicture"
-            onChange={handleChange}
-            accept="image/*"
-            className="absolute bottom-0 left-0 w-full opacity-0 cursor-pointer"
-          />
+          <label htmlFor="profilePicture" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+            <Camera className="w-8 h-8 text-blue-900" />
+            <Input
+              type="file"
+              id="profilePicture"
+              name="profilePicture"
+              onChange={handleChange}
+              accept="image/*"
+              className="hidden"
+            />
+          </label>
         )}
       </div>
       {isEditing ? (
