@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, MapPin, AlertTriangle } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X } from "lucide-react";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,6 +15,7 @@ const Profile = () => {
     collection: ["Parfum 1", "Parfum 2", "Parfum 3"],
     profilePicture: "/placeholder.svg"
   });
+  const [newPerfume, setNewPerfume] = useState("");
 
   const handleEdit = () => setIsEditing(true);
   const handleSave = () => {
@@ -33,8 +34,23 @@ const Profile = () => {
     }
   };
 
+  const handleAddPerfume = () => {
+    if (newPerfume.trim() !== "") {
+      setProfile({
+        ...profile,
+        collection: [...profile.collection, newPerfume.trim()]
+      });
+      setNewPerfume("");
+    }
+  };
+
+  const handleRemovePerfume = (index) => {
+    const updatedCollection = profile.collection.filter((_, i) => i !== index);
+    setProfile({ ...profile, collection: updatedCollection });
+  };
+
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 max-w-2xl mx-auto">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-16 max-w-2xl mx-auto">
       <div className="w-full bg-white shadow-md rounded-lg p-6">
         <div className="flex items-start mb-6">
           <div className="relative mr-4">
@@ -118,11 +134,33 @@ const Profile = () => {
           <h3 className="text-xl font-semibold mb-2">Meine Sammlung</h3>
           <div className="grid grid-cols-3 gap-4">
             {profile.collection.map((item, index) => (
-              <div key={index} className="bg-gray-100 p-4 rounded">
+              <div key={index} className="bg-gray-100 p-4 rounded relative">
                 <div className="w-full h-32 bg-gray-300 mb-2 rounded"></div>
                 <p className="text-center">{item}</p>
+                {isEditing && (
+                  <button
+                    onClick={() => handleRemovePerfume(index)}
+                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
             ))}
+            {isEditing && (
+              <div className="bg-gray-100 p-4 rounded flex flex-col items-center justify-center">
+                <Input
+                  type="text"
+                  value={newPerfume}
+                  onChange={(e) => setNewPerfume(e.target.value)}
+                  placeholder="Neues Parfum"
+                  className="mb-2"
+                />
+                <Button onClick={handleAddPerfume} className="w-full">
+                  <Plus className="w-4 h-4 mr-2" /> Hinzufügen
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
