@@ -7,7 +7,8 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: "John Doe",
     location: "Berlin, Deutschland",
-    collection: ["Parfum 1 (Marke)", "Parfum 2 (Marke)", "Parfum 3 (Marke)"]
+    collection: ["Parfum 1 (Marke)", "Parfum 2 (Marke)", "Parfum 3 (Marke)"],
+    profilePicture: "/placeholder.svg"
   });
 
   const handleEdit = () => {
@@ -21,17 +22,39 @@ const Profile = () => {
   };
 
   const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+    if (e.target.name === "profilePicture") {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProfile({ ...profile, profilePicture: reader.result });
+        };
+        reader.readAsDataURL(file);
+      }
+    } else {
+      setProfile({ ...profile, [e.target.name]: e.target.value });
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
       <h2 className="text-2xl font-bold mb-4 text-foreground">Dein Profil</h2>
-      <img 
-        src="/placeholder.svg" 
-        alt="Profilbild" 
-        className="w-32 h-32 rounded-full mb-4 object-cover"
-      />
+      <div className="relative mb-4">
+        <img 
+          src={profile.profilePicture} 
+          alt="Profilbild" 
+          className="w-32 h-32 rounded-full object-cover"
+        />
+        {isEditing && (
+          <Input
+            type="file"
+            name="profilePicture"
+            onChange={handleChange}
+            accept="image/*"
+            className="absolute bottom-0 left-0 w-full opacity-0 cursor-pointer"
+          />
+        )}
+      </div>
       {isEditing ? (
         <>
           <Input
