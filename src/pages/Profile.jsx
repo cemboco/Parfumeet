@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Camera, MapPin, AlertTriangle, Plus, X } from "lucide-react";
+import Navbar from '../components/Navbar';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -50,16 +51,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-background">
-      {/* Header Trennung - angepasst an die Home-Seite */}
-      <div className="w-full bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-16"></div>
-        </div>
-      </div>
-      
-      {/* Profilinhalt */}
-      <div className="w-full max-w-2xl mx-auto p-4 pt-8">
+    <div className="flex flex-col min-h-screen bg-background">
+      <Navbar />
+      <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8">
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
             <div className="relative mr-4">
