@@ -12,16 +12,10 @@ const Profile = () => {
     about: "Parfüm-Enthusiast mit einer Vorliebe für holzige und orientalische Düfte. Immer auf der Suche nach neuen olfaktorischen Erlebnissen!",
     username: "cxboco",
     gender: "männlich",
-    collection: [
-      { name: "Parfum 1", image: "/placeholder.svg" },
-      { name: "Parfum 2", image: "/placeholder.svg" },
-      { name: "Parfum 3", image: "/placeholder.svg" },
-      { name: "Kina", image: "/kina.jpg" },
-      { name: "Givenchy", image: "/Givenchy.jpg" },
-    ],
+    collection: ["Parfum 1", "Parfum 2", "Parfum 3"],
     profilePicture: "/placeholder.svg"
   });
-  const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
+  const [newPerfume, setNewPerfume] = useState("");
 
   const handleEdit = () => setIsEditing(true);
   const handleSave = () => {
@@ -41,12 +35,12 @@ const Profile = () => {
   };
 
   const handleAddPerfume = () => {
-    if (newPerfume.name.trim() !== "") {
+    if (newPerfume.trim() !== "") {
       setProfile({
         ...profile,
-        collection: [...profile.collection, { ...newPerfume, image: newPerfume.image || "/placeholder.svg" }]
+        collection: [...profile.collection, newPerfume.trim()]
       });
-      setNewPerfume({ name: "", image: "" });
+      setNewPerfume("");
     }
   };
 
@@ -144,8 +138,8 @@ const Profile = () => {
             <div className="grid grid-cols-3 gap-4">
               {profile.collection.map((item, index) => (
                 <div key={index} className="bg-gray-100 p-4 rounded-lg relative">
-                  <img src={item.image} alt={item.name} className="w-full h-32 object-cover mb-2 rounded-lg" />
-                  <p className="text-center">{item.name}</p>
+                  <div className="w-full h-32 bg-gray-300 mb-2 rounded-lg"></div>
+                  <p className="text-center">{item}</p>
                   {isEditing && (
                     <button
                       onClick={() => handleRemovePerfume(index)}
@@ -160,16 +154,9 @@ const Profile = () => {
                 <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
                   <Input
                     type="text"
-                    value={newPerfume.name}
-                    onChange={(e) => setNewPerfume({ ...newPerfume, name: e.target.value })}
+                    value={newPerfume}
+                    onChange={(e) => setNewPerfume(e.target.value)}
                     placeholder="Neues Parfum"
-                    className="mb-2 rounded-full"
-                  />
-                  <Input
-                    type="text"
-                    value={newPerfume.image}
-                    onChange={(e) => setNewPerfume({ ...newPerfume, image: e.target.value })}
-                    placeholder="Bild-URL"
                     className="mb-2 rounded-full"
                   />
                   <Button onClick={handleAddPerfume} className="w-full rounded-full">
