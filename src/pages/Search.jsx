@@ -32,7 +32,7 @@ const Search = () => {
         placeholder="Suche nach Name oder Marke"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 w-full max-w-md"
+        className="mb-4 w-full max-w-md rounded-full"
       />
       
       <h3 className="text-xl font-semibold mb-2 text-foreground">Nach Duftnoten filtern</h3>
@@ -51,7 +51,7 @@ const Search = () => {
         ))}
       </ul>
       
-      <Button onClick={handleSearch} className="mb-4">Suchen</Button>
+      <Button onClick={handleSearch} className="mb-4 rounded-full">Suchen</Button>
       
       <h3 className="text-xl font-semibold mb-2 text-foreground">Suchergebnisse</h3>
       <ul className="list-disc list-inside space-y-2 text-foreground">

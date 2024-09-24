@@ -98,7 +98,7 @@ const Profile = () => {
                 name="about"
                 value={profile.about}
                 onChange={handleChange}
-                className="w-full"
+                className="w-full rounded-lg"
               />
             ) : (
               <p>{profile.about}</p>
@@ -115,6 +115,7 @@ const Profile = () => {
                     name="username"
                     value={profile.username}
                     onChange={handleChange}
+                    className="rounded-full"
                   />
                 ) : (
                   <p>{profile.username}</p>
@@ -127,6 +128,7 @@ const Profile = () => {
                     name="gender"
                     value={profile.gender}
                     onChange={handleChange}
+                    className="rounded-full"
                   />
                 ) : (
                   <p>{profile.gender}</p>
@@ -139,8 +141,8 @@ const Profile = () => {
             <h3 className="text-xl font-semibold mb-2">Meine Sammlung</h3>
             <div className="grid grid-cols-3 gap-4">
               {profile.collection.map((item, index) => (
-                <div key={index} className="bg-gray-100 p-4 rounded relative">
-                  <div className="w-full h-32 bg-gray-300 mb-2 rounded"></div>
+                <div key={index} className="bg-gray-100 p-4 rounded-lg relative">
+                  <div className="w-full h-32 bg-gray-300 mb-2 rounded-lg"></div>
                   <p className="text-center">{item}</p>
                   {isEditing && (
                     <button
@@ -153,15 +155,15 @@ const Profile = () => {
                 </div>
               ))}
               {isEditing && (
-                <div className="bg-gray-100 p-4 rounded flex flex-col items-center justify-center">
+                <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
                   <Input
                     type="text"
                     value={newPerfume}
                     onChange={(e) => setNewPerfume(e.target.value)}
                     placeholder="Neues Parfum"
-                    className="mb-2"
+                    className="mb-2 rounded-full"
                   />
-                  <Button onClick={handleAddPerfume} className="w-full">
+                  <Button onClick={handleAddPerfume} className="w-full rounded-full">
                     <Plus className="w-4 h-4 mr-2" /> Hinzufügen
                   </Button>
                 </div>
@@ -170,9 +172,9 @@ const Profile = () => {
           </div>
 
           {isEditing ? (
-            <Button onClick={handleSave} className="w-full">Speichern</Button>
+            <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
           ) : (
-            <Button onClick={handleEdit} className="w-full">Profil bearbeiten</Button>
+            <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
           )}
         </div>
       </div>
