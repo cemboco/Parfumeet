@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { fragranceNotes } from '../data/fragranceNotes';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({
-    floral: false,
-    citrus: false,
-    woody: false,
-    oriental: false
-  });
+  const [filters, setFilters] = useState(
+    Object.fromEntries(fragranceNotes.map(note => [note.toLowerCase(), false]))
+  );
 
   const handleFilterChange = (filterName) => {
     setFilters(prevFilters => ({
@@ -36,20 +34,20 @@ const Search = () => {
       />
       
       <h3 className="text-xl font-semibold mb-2 text-foreground">Nach Duftnoten filtern</h3>
-      <ul className="mb-4 space-y-2">
-        {Object.entries(filters).map(([key, value]) => (
-          <li key={key} className="flex items-center space-x-2">
+      <div className="mb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-w-4xl">
+        {fragranceNotes.map((note) => (
+          <div key={note} className="flex items-center space-x-2">
             <Checkbox
-              id={key}
-              checked={value}
-              onCheckedChange={() => handleFilterChange(key)}
+              id={note.toLowerCase()}
+              checked={filters[note.toLowerCase()]}
+              onCheckedChange={() => handleFilterChange(note.toLowerCase())}
             />
-            <label htmlFor={key} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              {key.charAt(0).toUpperCase() + key.slice(1)}
+            <label htmlFor={note.toLowerCase()} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {note}
             </label>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       
       <Button onClick={handleSearch} className="mb-4 rounded-full">Suchen</Button>
       
