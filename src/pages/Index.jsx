@@ -10,12 +10,12 @@ const Index = () => {
       <div className="flex flex-col items-center justify-center min-h-screen bg-black bg-opacity-50 text-white">
         <h1 className="text-6xl font-bold mb-5">Parfumeet</h1>
         <p className="text-xl mb-8 text-center max-w-md">Entdecke neue Düfte mit Hilfe deiner Community.</p>
-        <div className="space-y-8"> {/* Increased space between buttons */}
-          <Link to="/search">
+        <div className="space-y-2"> {/* Reduzierter Abstand von 8 auf 2 */}
+          <Link to="/search" className="block mb-2"> {/* Zusätzlicher Abstand unten */}
             <Button className="w-full bg-white text-black hover:bg-gray-200">Finde deinen perfekten Duft</Button>
           </Link>
           <Link to="/profile">
-            <Button className="w-full bg-transparent border border-white hover:bg-blue-900 hover:border-blue-900 transition-colors">
+            <Button className="w-full bg-transparent border border-white hover:bg-midnight-blue hover:border-midnight-blue transition-colors">
               Erstelle dein Profil
             </Button>
           </Link>
