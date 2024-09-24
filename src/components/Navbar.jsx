@@ -13,10 +13,10 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center">
-            <Button variant="ghost" className="mr-2">
+            <Button variant="ghost" className="mr-2 rounded-full">
               Sign Up
             </Button>
-            <Button>
+            <Button className="rounded-full">
               Login
             </Button>
           </div>
