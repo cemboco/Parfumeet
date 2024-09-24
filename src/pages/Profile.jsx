@@ -51,8 +51,12 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-background">
-      {/* Header Trennung */}
-      <div className="w-full h-16 bg-white shadow-md"></div>
+      {/* Header Trennung - angepasst an die Home-Seite */}
+      <div className="w-full bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-16"></div>
+        </div>
+      </div>
       
       {/* Profilinhalt */}
       <div className="w-full max-w-2xl mx-auto p-4 pt-8">
