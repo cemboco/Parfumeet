@@ -50,125 +50,131 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-24 max-w-2xl mx-auto"> {/* Changed pt-16 to pt-24 */}
-      <div className="w-full bg-white shadow-md rounded-lg p-6">
-        <div className="flex items-start mb-6">
-          <div className="relative mr-4">
-            <img 
-              src={profile.profilePicture} 
-              alt="Profilbild" 
-              className="w-24 h-24 rounded-full object-cover"
-            />
-            {isEditing && (
-              <label htmlFor="profilePicture" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
-                <Camera className="w-8 h-8 text-blue-900" />
-                <Input
-                  type="file"
-                  id="profilePicture"
-                  name="profilePicture"
-                  onChange={handleChange}
-                  accept="image/*"
-                  className="hidden"
-                />
-              </label>
+    <div className="flex flex-col items-center justify-start min-h-screen bg-background">
+      {/* Header Trennung */}
+      <div className="w-full h-16 bg-white shadow-md"></div>
+      
+      {/* Profilinhalt */}
+      <div className="w-full max-w-2xl mx-auto p-4 pt-8">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <div className="flex items-start mb-6">
+            <div className="relative mr-4">
+              <img 
+                src={profile.profilePicture} 
+                alt="Profilbild" 
+                className="w-24 h-24 rounded-full object-cover"
+              />
+              {isEditing && (
+                <label htmlFor="profilePicture" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+                  <Camera className="w-8 h-8 text-blue-900" />
+                  <Input
+                    type="file"
+                    id="profilePicture"
+                    name="profilePicture"
+                    onChange={handleChange}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                </label>
+              )}
+            </div>
+            <div className="flex-grow">
+              <h2 className="text-2xl font-bold mb-1">{profile.name}</h2>
+              <div className="flex items-center text-gray-600 mb-1">
+                <MapPin className="w-4 h-4 mr-1" />
+                <span>{profile.location}</span>
+              </div>
+              <div className="flex items-center text-yellow-500">
+                <AlertTriangle className="w-4 h-4 mr-1" />
+                <span>Nicht verifiziert</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <h3 className="text-xl font-semibold mb-2">Über mich</h3>
+            {isEditing ? (
+              <Textarea
+                name="about"
+                value={profile.about}
+                onChange={handleChange}
+                className="w-full"
+              />
+            ) : (
+              <p>{profile.about}</p>
             )}
           </div>
-          <div className="flex-grow">
-            <h2 className="text-2xl font-bold mb-1">{profile.name}</h2>
-            <div className="flex items-center text-gray-600 mb-1">
-              <MapPin className="w-4 h-4 mr-1" />
-              <span>{profile.location}</span>
-            </div>
-            <div className="flex items-center text-yellow-500">
-              <AlertTriangle className="w-4 h-4 mr-1" />
-              <span>Nicht verifiziert</span>
-            </div>
-          </div>
-        </div>
 
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Über mich</h3>
-          {isEditing ? (
-            <Textarea
-              name="about"
-              value={profile.about}
-              onChange={handleChange}
-              className="w-full"
-            />
-          ) : (
-            <p>{profile.about}</p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Profil-Details</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="font-medium">Benutzername:</p>
-              {isEditing ? (
-                <Input
-                  name="username"
-                  value={profile.username}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{profile.username}</p>
-              )}
-            </div>
-            <div>
-              <p className="font-medium">Geschlecht:</p>
-              {isEditing ? (
-                <Input
-                  name="gender"
-                  value={profile.gender}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p>{profile.gender}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Meine Sammlung</h3>
-          <div className="grid grid-cols-3 gap-4">
-            {profile.collection.map((item, index) => (
-              <div key={index} className="bg-gray-100 p-4 rounded relative">
-                <div className="w-full h-32 bg-gray-300 mb-2 rounded"></div>
-                <p className="text-center">{item}</p>
-                {isEditing && (
-                  <button
-                    onClick={() => handleRemovePerfume(index)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+          <div className="mb-4">
+            <h3 className="text-xl font-semibold mb-2">Profil-Details</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="font-medium">Benutzername:</p>
+                {isEditing ? (
+                  <Input
+                    name="username"
+                    value={profile.username}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p>{profile.username}</p>
                 )}
               </div>
-            ))}
-            {isEditing && (
-              <div className="bg-gray-100 p-4 rounded flex flex-col items-center justify-center">
-                <Input
-                  type="text"
-                  value={newPerfume}
-                  onChange={(e) => setNewPerfume(e.target.value)}
-                  placeholder="Neues Parfum"
-                  className="mb-2"
-                />
-                <Button onClick={handleAddPerfume} className="w-full">
-                  <Plus className="w-4 h-4 mr-2" /> Hinzufügen
-                </Button>
+              <div>
+                <p className="font-medium">Geschlecht:</p>
+                {isEditing ? (
+                  <Input
+                    name="gender"
+                    value={profile.gender}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p>{profile.gender}</p>
+                )}
               </div>
-            )}
+            </div>
           </div>
-        </div>
 
-        {isEditing ? (
-          <Button onClick={handleSave} className="w-full">Speichern</Button>
-        ) : (
-          <Button onClick={handleEdit} className="w-full">Profil bearbeiten</Button>
-        )}
+          <div className="mb-4">
+            <h3 className="text-xl font-semibold mb-2">Meine Sammlung</h3>
+            <div className="grid grid-cols-3 gap-4">
+              {profile.collection.map((item, index) => (
+                <div key={index} className="bg-gray-100 p-4 rounded relative">
+                  <div className="w-full h-32 bg-gray-300 mb-2 rounded"></div>
+                  <p className="text-center">{item}</p>
+                  {isEditing && (
+                    <button
+                      onClick={() => handleRemovePerfume(index)}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
+              {isEditing && (
+                <div className="bg-gray-100 p-4 rounded flex flex-col items-center justify-center">
+                  <Input
+                    type="text"
+                    value={newPerfume}
+                    onChange={(e) => setNewPerfume(e.target.value)}
+                    placeholder="Neues Parfum"
+                    className="mb-2"
+                  />
+                  <Button onClick={handleAddPerfume} className="w-full">
+                    <Plus className="w-4 h-4 mr-2" /> Hinzufügen
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {isEditing ? (
+            <Button onClick={handleSave} className="w-full">Speichern</Button>
+          ) : (
+            <Button onClick={handleEdit} className="w-full">Profil bearbeiten</Button>
+          )}
+        </div>
       </div>
     </div>
   );
