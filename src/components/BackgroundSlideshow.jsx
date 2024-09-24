@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 const images = [
   '/tolga-durgut-i6TnagtR2bk-unsplash.jpg',
   '/trung-do-bao-AynL5XXQsGc-unsplash.jpg',
-  '/trung-do-bao-s8uBaa5XL8I-unsplash.jpg'
+  '/trung-do-bao-s8uBaa5XL8I-unsplash.jpg',
+  '/kina.jpg',
+  '/Givenchy.jpg'
 ];
 
 const BackgroundSlideshow = () => {
