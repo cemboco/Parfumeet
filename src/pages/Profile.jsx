@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Camera, MapPin, AlertTriangle, Plus, X } from "lucide-react";
-import Navbar from '../components/Navbar';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -52,7 +51,6 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Navbar />
       <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8">
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
