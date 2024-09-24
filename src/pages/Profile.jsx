@@ -50,7 +50,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-16 max-w-2xl mx-auto">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-24 max-w-2xl mx-auto"> {/* Changed pt-16 to pt-24 */}
       <div className="w-full bg-white shadow-md rounded-lg p-6">
         <div className="flex items-start mb-6">
           <div className="relative mr-4">
