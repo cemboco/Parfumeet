@@ -22,8 +22,8 @@ const BackgroundSlideshow = () => {
   }, []);
 
   return (
-    <>
-      <div className="fixed inset-0 z-[-1]">
+    <div className="relative h-screen">
+      <div className="absolute inset-0">
         {images.map((image, index) => (
           <div
             key={image}
@@ -34,12 +34,14 @@ const BackgroundSlideshow = () => {
           />
         ))}
       </div>
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 text-white">
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
         <h1 className="text-6xl font-bold mb-5">Parfumeet</h1>
         <p className="text-xl mb-8 text-center max-w-md">Entdecke neue Düfte mit Hilfe deiner Community.</p>
-        <div className="space-y-2">
-          <Link to="/search" className="block mb-2">
-            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">Finde deinen perfekten Duft</Button>
+        <div className="space-y-4">
+          <Link to="/search" className="block">
+            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">
+              Finde deinen perfekten Duft
+            </Button>
           </Link>
           <Link to="/profile">
             <Button className="w-full bg-transparent border border-white hover:bg-blue-900 hover:border-blue-900 transition-colors rounded-full">
@@ -48,7 +50,7 @@ const BackgroundSlideshow = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
