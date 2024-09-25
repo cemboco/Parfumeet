@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, MapPin, AlertTriangle, Plus, X, Male, Female } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X, ManIcon, WomanIcon } from "lucide-react";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -97,10 +97,10 @@ const Profile = () => {
             <div className="ml-4">
               {isEditing ? (
                 <Button onClick={handleGenderToggle} className="p-2">
-                  {profile.isMale ? <Male className="w-6 h-6" /> : <Female className="w-6 h-6" />}
+                  {profile.isMale ? <ManIcon className="w-6 h-6" /> : <WomanIcon className="w-6 h-6" />}
                 </Button>
               ) : (
-                profile.isMale ? <Male className="w-6 h-6" /> : <Female className="w-6 h-6" />
+                profile.isMale ? <ManIcon className="w-6 h-6" /> : <WomanIcon className="w-6 h-6" />
               )}
             </div>
           </div>
