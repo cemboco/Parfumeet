@@ -10,7 +10,6 @@ const Profile = () => {
     name: "Cemil Bocohonsi",
     location: "Berlin, Deutschland",
     about: "Parfüm-Enthusiast mit einer Vorliebe für holzige und orientalische Düfte. Immer auf der Suche nach neuen olfaktorischen Erlebnissen!",
-    username: "cxboco",
     gender: "männlich",
     collection: [
       { name: "Parfum 1", image: "/placeholder.svg" },
@@ -109,20 +108,7 @@ const Profile = () => {
 
           <div className="mb-4">
             <h3 className="text-xl font-semibold mb-2">Profil-Details</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="font-medium">Benutzername:</p>
-                {isEditing ? (
-                  <Input
-                    name="username"
-                    value={profile.username}
-                    onChange={handleChange}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <p>{profile.username}</p>
-                )}
-              </div>
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <p className="font-medium">Geschlecht:</p>
                 {isEditing ? (
