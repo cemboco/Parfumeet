@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, MapPin, AlertTriangle, Plus, X } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X, Male, Female } from "lucide-react";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,7 +10,7 @@ const Profile = () => {
     name: "Cemil Bocohonsi",
     location: "Berlin, Deutschland",
     about: "Parfüm-Enthusiast mit einer Vorliebe für holzige und orientalische Düfte. Immer auf der Suche nach neuen olfaktorischen Erlebnissen!",
-    gender: "männlich",
+    isMale: true,
     collection: [
       { name: "Parfum 1", image: "/placeholder.svg" },
       { name: "Parfum 2", image: "/placeholder.svg" },
@@ -37,6 +37,10 @@ const Profile = () => {
     } else {
       setProfile({ ...profile, [name]: value });
     }
+  };
+
+  const handleGenderToggle = () => {
+    setProfile(prev => ({ ...prev, isMale: !prev.isMale }));
   };
 
   const handleAddPerfume = () => {
@@ -90,6 +94,15 @@ const Profile = () => {
                 <span>Nicht verifiziert</span>
               </div>
             </div>
+            <div className="ml-4">
+              {isEditing ? (
+                <Button onClick={handleGenderToggle} className="p-2">
+                  {profile.isMale ? <Male className="w-6 h-6" /> : <Female className="w-6 h-6" />}
+                </Button>
+              ) : (
+                profile.isMale ? <Male className="w-6 h-6" /> : <Female className="w-6 h-6" />
+              )}
+            </div>
           </div>
 
           <div className="mb-4">
@@ -104,25 +117,6 @@ const Profile = () => {
             ) : (
               <p>{profile.about}</p>
             )}
-          </div>
-
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold mb-2">Profil-Details</h3>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <p className="font-medium">Geschlecht:</p>
-                {isEditing ? (
-                  <Input
-                    name="gender"
-                    value={profile.gender}
-                    onChange={handleChange}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <p>{profile.gender}</p>
-                )}
-              </div>
-            </div>
           </div>
 
           <div className="mb-4">
