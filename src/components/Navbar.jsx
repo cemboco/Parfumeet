@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import LoginModal from './LoginModal';
 
 const Navbar = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,11 +13,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center">
-            <Button 
-              variant="ghost" 
-              className="mr-2 rounded-full"
-              onClick={() => setIsLoginModalOpen(true)}
-            >
+            <Button variant="ghost" className="mr-2 rounded-full">
               Sign Up
             </Button>
             <Button className="rounded-full">
@@ -29,7 +22,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />
     </nav>
   );
 };
