@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,9 +25,10 @@ const SettingsDialog = ({ open, onOpenChange }) => {
     console.log("Account-Löschung angefordert");
   };
 
-  const handleNotificationSettings = () => {
-    // Implementierung für Mitteilungseinstellungen
-    console.log("Mitteilungseinstellungen aktualisiert");
+  const handleSaveSettings = () => {
+    // Implementierung für das Speichern der Einstellungen
+    console.log("Einstellungen gespeichert");
+    onOpenChange(false); // Schließt den Dialog nach dem Speichern
   };
 
   return (
@@ -37,11 +38,10 @@ const SettingsDialog = ({ open, onOpenChange }) => {
           <DialogTitle>Einstellungen</DialogTitle>
         </DialogHeader>
         <Tabs defaultValue="identity" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="identity">Identität</TabsTrigger>
             <TabsTrigger value="language">Sprache</TabsTrigger>
             <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="notifications">Mitteilungen</TabsTrigger>
           </TabsList>
           <TabsContent value="identity">
             <div className="space-y-4 py-4">
@@ -74,24 +74,8 @@ const SettingsDialog = ({ open, onOpenChange }) => {
               <Button variant="destructive" onClick={handleDeleteAccount}>Account löschen</Button>
             </div>
           </TabsContent>
-          <TabsContent value="notifications">
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="email-notifications">E-Mail-Benachrichtigungen</Label>
-                <Select onValueChange={handleNotificationSettings}>
-                  <SelectTrigger id="email-notifications">
-                    <SelectValue placeholder="Häufigkeit wählen" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="daily">Täglich</SelectItem>
-                    <SelectItem value="weekly">Wöchentlich</SelectItem>
-                    <SelectItem value="never">Nie</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </TabsContent>
         </Tabs>
+        <Button onClick={handleSaveSettings} className="mt-4 w-full">Speichern</Button>
       </DialogContent>
     </Dialog>
   );
