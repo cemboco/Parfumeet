@@ -15,7 +15,7 @@ const Index = () => {
             <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">Finde deinen perfekten Duft</Button>
           </Link>
           <Link to="/profile">
-            <Button className="w-full bg-transparent border border-white hover:bg-midnight-blue hover:border-midnight-blue transition-colors rounded-full">
+            <Button className="w-full bg-transparent border border-white hover:bg-gray-200 hover:text-black transition-colors rounded-full">
               Erstelle dein Profil
             </Button>
           </Link>
