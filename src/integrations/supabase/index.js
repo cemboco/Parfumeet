@@ -1,11 +1,11 @@
-// Import all the relevant exports from other files in the supabase directory
-import { supabase } from './supabase.js';
-import { SupabaseAuthProvider, useSupabaseAuth, SupabaseAuthUI } from './auth.jsx';
+import { supabase } from './supabase';
+import { useUser, useUsers, useAddUser, useUpdateUser, useDeleteUser } from './hooks/useUser';
 
-// Export all the imported functions and objects from .auth and .hooks/
 export {
-  supabase,
-  SupabaseAuthProvider,
-  useSupabaseAuth,
-  SupabaseAuthUI,
+    supabase,
+    useUser,
+    useUsers,
+    useAddUser,
+    useUpdateUser,
+    useDeleteUser
 };
