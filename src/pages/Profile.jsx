@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, MapPin, AlertTriangle, Plus, X } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X, Settings } from "lucide-react";
+import SettingsDialog from '../components/SettingsDialog';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [profile, setProfile] = useState({
     name: "Cemil Bocohonsi",
     location: "Berlin, Deutschland",
@@ -56,7 +58,15 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8">
+      <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8 relative">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          <Settings className="h-6 w-6" />
+        </Button>
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
             <div className="relative mr-4">
@@ -173,6 +183,7 @@ const Profile = () => {
           )}
         </div>
       </div>
+      <SettingsDialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen} />
     </div>
   );
 };
