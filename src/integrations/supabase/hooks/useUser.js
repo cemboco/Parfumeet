@@ -10,10 +10,15 @@ const fromSupabase = async (query) => {
 /*
 ### User
 
-| name       | type                     | format | required |
-|------------|--------------------------|--------|----------|
-| id         | integer                  | bigint | true     |
-| created_at | timestamp with time zone | string | true     |
+| name                | type                     | format | required |
+|---------------------|--------------------------|--------|----------|
+| id                  | integer                  | bigint | true     |
+| created_at          | timestamp with time zone | string | true     |
+| name                | text                     | string | false    |
+| location            | text                     | string | false    |
+| about               | text                     | string | false    |
+| gender              | text                     | string | false    |
+| profile_picture_url | text                     | string | false    |
 
 Note: 
 - id is the Primary Key.
