@@ -16,7 +16,22 @@ export const fragranceList = [
   "Initio Parfums Privés Oud for Greatness", "Nishane Hacivat",
   "Vilhelm Parfumerie Dear Polly", "Imaginary Authors Memoirs of a Trespasser",
   "Montale Intense Cafe", "Acqua di Parma Colonia", "Clive Christian No. 1",
-  "Bond No. 9 New York Nights"
+  "Bond No. 9 New York Nights",
+  // New fragrances added below
+  "Yves Saint Laurent Black Opium", "Chanel Bleu de Chanel", "Dior Miss Dior",
+  "Tom Ford Tobacco Vanille", "Gucci Guilty", "Armani Sì", "Versace Eros",
+  "Hermès Un Jardin sur le Nil", "Maison Margiela By the Fireplace",
+  "Jo Malone Wood Sage & Sea Salt", "Creed Green Irish Tweed",
+  "Byredo Bal d'Afrique", "Diptyque Philosykos", "Frederic Malle Musc Ravageur",
+  "Kilian Angels' Share", "Amouage Jubilation XXV", "Xerjoff Nio",
+  "Mancera Roses Vanille", "Roja Dove Enigma", "Tiziana Terenzi Orion",
+  "Nasomatto Pardon", "Serge Lutens Chergui", "Penhaligon's Halfeti",
+  "Zoologist Bat", "Etat Libre d'Orange Fat Electrician",
+  "Juliette Has a Gun Lady Vengeance", "Maison Francis Kurkdjian Grand Soir",
+  "Initio Parfums Privés Side Effect", "Nishane Ani",
+  "Vilhelm Parfumerie Moon Carnival", "Imaginary Authors A City on Fire",
+  "Montale Honey Aoud", "Acqua di Parma Fico di Amalfi", "Clive Christian X",
+  "Bond No. 9 Scent of Peace"
 ];
 
 export const initializeLocalStorage = () => {
