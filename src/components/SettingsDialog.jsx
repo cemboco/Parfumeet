@@ -10,25 +10,21 @@ const SettingsDialog = ({ open, onOpenChange }) => {
   const [language, setLanguage] = useState('de');
 
   const handleIdentityVerification = () => {
-    // Implementierung für Identitätsnachweis
     console.log("Identitätsnachweis-Prozess gestartet");
   };
 
   const handleLanguageChange = (value) => {
     setLanguage(value);
-    // Implementierung für Sprachänderung
     console.log("Sprache geändert zu:", value);
   };
 
   const handleDeleteAccount = () => {
-    // Implementierung für Account-Löschung
     console.log("Account-Löschung angefordert");
   };
 
   const handleSaveSettings = () => {
-    // Implementierung für das Speichern der Einstellungen
     console.log("Einstellungen gespeichert");
-    onOpenChange(false); // Schließt den Dialog nach dem Speichern
+    onOpenChange(false);
   };
 
   return (
@@ -49,7 +45,7 @@ const SettingsDialog = ({ open, onOpenChange }) => {
                 <Label htmlFor="identity">Identitätsnachweis</Label>
                 <Input id="identity" type="file" />
               </div>
-              <Button onClick={handleIdentityVerification}>Nachweis hochladen</Button>
+              <Button onClick={handleIdentityVerification} className="w-full rounded-full">Nachweis hochladen</Button>
             </div>
           </TabsContent>
           <TabsContent value="language">
@@ -57,7 +53,7 @@ const SettingsDialog = ({ open, onOpenChange }) => {
               <div className="space-y-2">
                 <Label htmlFor="language">Sprache auswählen</Label>
                 <Select value={language} onValueChange={handleLanguageChange}>
-                  <SelectTrigger id="language">
+                  <SelectTrigger id="language" className="rounded-full">
                     <SelectValue placeholder="Sprache wählen" />
                   </SelectTrigger>
                   <SelectContent>
@@ -71,11 +67,11 @@ const SettingsDialog = ({ open, onOpenChange }) => {
           </TabsContent>
           <TabsContent value="account">
             <div className="space-y-4 py-4">
-              <Button variant="destructive" onClick={handleDeleteAccount}>Account löschen</Button>
+              <Button variant="destructive" onClick={handleDeleteAccount} className="w-full rounded-full">Account löschen</Button>
             </div>
           </TabsContent>
         </Tabs>
-        <Button onClick={handleSaveSettings} className="mt-4 w-full">Speichern</Button>
+        <Button onClick={handleSaveSettings} className="mt-4 w-full rounded-full">Speichern</Button>
       </DialogContent>
     </Dialog>
   );
