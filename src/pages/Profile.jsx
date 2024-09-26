@@ -17,8 +17,6 @@ const Profile = () => {
       { name: "Parfum 1", image: "/placeholder.svg" },
       { name: "Parfum 2", image: "/placeholder.svg" },
       { name: "Parfum 3", image: "/placeholder.svg" },
-      { name: "Kina", image: "/kina.jpg" },
-      { name: "Givenchy", image: "/Givenchy.jpg" },
     ],
     profilePicture: "/placeholder.svg"
   });
