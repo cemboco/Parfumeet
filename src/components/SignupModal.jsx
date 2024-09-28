@@ -36,9 +36,9 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           .upsert({ id: data.user.id, name: name });
 
         if (profileError) throw profileError;
-      }
 
-      setSignupStatus('success');
+        setSignupStatus('success');
+      }
     } catch (error) {
       console.error('Error signing up:', error.message);
       setSignupStatus('error');
