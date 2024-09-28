@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Camera, MapPin, AlertTriangle, Plus, X, Settings } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X, Settings, MessageSquare } from "lucide-react";
 import SettingsDialog from '../components/SettingsDialog';
 import { supabase } from '../integrations/supabase/supabase';
 
@@ -19,9 +19,11 @@ const Profile = () => {
     avatar_url: ""
   });
   const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     fetchProfile();
+    fetchCurrentUser();
   }, []);
 
   const fetchProfile = async () => {
@@ -39,6 +41,11 @@ const Profile = () => {
         setProfile(data);
       }
     }
+  };
+
+  const fetchCurrentUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    setCurrentUser(user);
   };
 
   const handleEdit = () => setIsEditing(true);
@@ -119,17 +126,34 @@ const Profile = () => {
       .slice(0, 2);
   };
 
+  const handleSendMessage = () => {
+    console.log("Send message to:", profile.name);
+    // Implement actual messaging functionality here
+  };
+
+  const isOwnProfile = currentUser && profile.id === currentUser.id;
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8 relative">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4"
-          onClick={() => setIsSettingsOpen(true)}
-        >
-          <Settings className="h-6 w-6" />
-        </Button>
+        <div className="absolute top-4 right-4 flex items-center space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSettingsOpen(true)}
+          >
+            <Settings className="h-6 w-6" />
+          </Button>
+          {!isOwnProfile && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleSendMessage}
+            >
+              <MessageSquare className="h-6 w-6" />
+            </Button>
+          )}
+        </div>
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
             <div className="relative mr-4">
@@ -238,10 +262,12 @@ const Profile = () => {
             </div>
           </div>
 
-          {isEditing ? (
-            <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
-          ) : (
-            <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
+          {isOwnProfile && (
+            isEditing ? (
+              <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
+            ) : (
+              <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
+            )
           )}
         </div>
       </div>
