@@ -110,6 +110,15 @@ const Profile = () => {
     }
   };
 
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8 relative">
@@ -126,7 +135,7 @@ const Profile = () => {
             <div className="relative mr-4">
               <Avatar className="w-24 h-24">
                 <AvatarImage src={profile.avatar_url} alt="Profilbild" />
-                <AvatarFallback>{profile.name ? profile.name[0].toUpperCase() : 'U'}</AvatarFallback>
+                <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
               </Avatar>
               {isEditing && (
                 <label htmlFor="avatar" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
