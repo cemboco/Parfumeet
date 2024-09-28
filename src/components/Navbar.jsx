@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import SignupModal from './SignupModal';
 import LoginModal from './LoginModal';
+import { supabase } from '../integrations/supabase/supabase';
 
 const Navbar = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Check initial auth state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <nav className="bg-white shadow-md">
@@ -21,12 +42,20 @@ const Navbar = () => {
             <Link to="/wie-es-funktioniert" className="text-gray-600 hover:text-gray-900">Wie es funktioniert</Link>
             <Link to="/kontakt" className="text-gray-600 hover:text-gray-900">Kontakt</Link>
             <Link to="/ueber-uns" className="text-gray-600 hover:text-gray-900">Über uns</Link>
-            <Button variant="ghost" className="rounded-full" onClick={() => setIsSignupOpen(true)}>
-              Registrieren
-            </Button>
-            <Button className="rounded-full" onClick={() => setIsLoginOpen(true)}>
-              Anmelden
-            </Button>
+            {!user ? (
+              <>
+                <Button variant="ghost" className="rounded-full" onClick={() => setIsSignupOpen(true)}>
+                  Registrieren
+                </Button>
+                <Button className="rounded-full" onClick={() => setIsLoginOpen(true)}>
+                  Anmelden
+                </Button>
+              </>
+            ) : (
+              <Button className="rounded-full" onClick={handleLogout}>
+                Abmelden
+              </Button>
+            )}
           </div>
         </div>
       </div>
