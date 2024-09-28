@@ -3,16 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Camera, MapPin, AlertTriangle, Plus, X, Settings, MessageSquare } from "lucide-react";
+import { Camera, MapPin, AlertTriangle, Plus, X, Settings } from "lucide-react";
 import SettingsDialog from '../components/SettingsDialog';
 import { supabase } from '../integrations/supabase/supabase';
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [profile, setProfile] = useState({
-    id: "",
     name: "",
     location: "",
     about: "",
@@ -21,8 +19,6 @@ const Profile = () => {
     avatar_url: ""
   });
   const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
-  const [isOwnProfile, setIsOwnProfile] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
@@ -41,11 +37,7 @@ const Profile = () => {
         console.error('Error fetching profile:', error);
       } else if (data) {
         setProfile(data);
-        setIsOwnProfile(true);
       }
-    } else {
-      // If no user is logged in, redirect to login page
-      navigate('/login');
     }
   };
 
@@ -127,34 +119,17 @@ const Profile = () => {
       .slice(0, 2);
   };
 
-  const handleSendMessage = () => {
-    // Implement the logic to send a message to the profile owner
-    console.log('Sending message to:', profile.name);
-    // You can navigate to a messaging page or open a modal for sending messages
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8 relative">
-        <div className="absolute top-4 right-4 flex items-center space-x-2">
-          {!isOwnProfile && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleSendMessage}
-              title="Send Message"
-            >
-              <MessageSquare className="h-6 w-6" />
-            </Button>
-          )}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsSettingsOpen(true)}
-          >
-            <Settings className="h-6 w-6" />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          <Settings className="h-6 w-6" />
+        </Button>
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
             <div className="relative mr-4">
@@ -263,12 +238,10 @@ const Profile = () => {
             </div>
           </div>
 
-          {isOwnProfile && (
-            isEditing ? (
-              <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
-            ) : (
-              <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
-            )
+          {isEditing ? (
+            <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
+          ) : (
+            <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
           )}
         </div>
       </div>
