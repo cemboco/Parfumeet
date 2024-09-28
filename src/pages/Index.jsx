@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import BackgroundSlideshow from '../components/BackgroundSlideshow';
 import MapComponent from '../components/MapComponent';
+import { User, MapPin, MessageSquare, Search } from 'lucide-react';
 
 const perfumeShops = [
   { name: "Douglas", address: "Königstraße 44, 70173 Stuttgart", coordinates: [48.7758, 9.1754] },
@@ -10,6 +11,29 @@ const perfumeShops = [
   { name: "Flaconi Store", address: "Königstraße 41, 70173 Stuttgart", coordinates: [48.7760, 9.1751] },
   { name: "Le Parfum", address: "Calwer Straße 25, 70173 Stuttgart", coordinates: [48.7778, 9.1760] },
   { name: "Parfümerie Akzente", address: "Rotebühlplatz 20, 70173 Stuttgart", coordinates: [48.7741, 9.1721] }
+];
+
+const services = [
+  {
+    icon: <User className="w-12 h-12 mb-4" />,
+    title: "Duftprofil",
+    description: "Erstelle dein persönliches Duftprofil und gebe Einblick in deine Parfümsammlung."
+  },
+  {
+    icon: <MapPin className="w-12 h-12 mb-4" />,
+    title: "Lokale Duft-Karte",
+    description: "Entdecke die faszinierende Welt der Düfte in deiner unmittelbaren Umgebung"
+  },
+  {
+    icon: <MessageSquare className="w-12 h-12 mb-4" />,
+    title: "Duft-Chat",
+    description: "Vernetze dich direkt mit anderen Parfümliebhabern. Tausche Erfahrungen aus, vereinbare Treffen zum Dufttesten oder diskutiere über deine Lieblingsparfums"
+  },
+  {
+    icon: <Search className="w-12 h-12 mb-4" />,
+    title: "Duftsuche",
+    description: "Erhalte detaillierte Informationen über verschiedene Parfüms, unter Duftnoten und Inhaltsstoffe. Finde gezielt Düfte, die dich interessieren."
+  }
 ];
 
 const Index = () => {
@@ -48,6 +72,20 @@ const Index = () => {
             <div className="md:w-1/2">
               <MapComponent shops={perfumeShops} />
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center">Dienste, die wir anbieten</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <div key={index} className="flex flex-col items-center text-center">
+                {service.icon}
+                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                <p className="text-gray-600">{service.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
