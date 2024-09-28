@@ -12,7 +12,7 @@ const Index = () => {
         <p className="text-xl mb-8 text-center max-w-md">Entdecke neue Düfte mit Hilfe deiner Community.</p>
         <div className="space-y-2">
           <Link to="/search" className="block mb-2">
-            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">Finde deinen perfekten Duft</Button>
+            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">Finde deinen Duft</Button>
           </Link>
           <Link to="/profile">
             <Button className="w-full bg-transparent border border-white hover:bg-gray-200 hover:text-black transition-colors rounded-full">
