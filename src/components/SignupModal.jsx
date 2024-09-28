@@ -20,7 +20,7 @@ const SignupModal = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Registrieren</DialogTitle>
+          <DialogTitle>Mach dich auf die Suche nach deinem Duft!</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSignup} className="space-y-4">
           <div className="space-y-2">

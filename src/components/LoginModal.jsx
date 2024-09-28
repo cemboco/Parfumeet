@@ -19,7 +19,7 @@ const LoginModal = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Anmelden</DialogTitle>
+          <DialogTitle>Willkommen zurück!</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-2">
