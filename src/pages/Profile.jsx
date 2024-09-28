@@ -265,11 +265,12 @@ const Profile = () => {
           </div>
 
           {isOwnProfile && (
-            isEditing ? (
-              <Button onClick={handleSave} className="w-full rounded-full">Speichern</Button>
-            ) : (
-              <Button onClick={handleEdit} className="w-full rounded-full">Profil bearbeiten</Button>
-            )
+            <Button 
+              onClick={isEditing ? handleSave : handleEdit} 
+              className="w-full rounded-full"
+            >
+              {isEditing ? 'Speichern' : 'Profil bearbeiten'}
+            </Button>
           )}
         </div>
       </div>
