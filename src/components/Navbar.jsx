@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageSquare } from "lucide-react";
 import SignupModal from './SignupModal';
 import LoginModal from './LoginModal';
 import { supabase } from '../integrations/supabase/supabase';
@@ -60,24 +59,10 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <Link to="/messages">
-                  <Button variant="ghost" size="icon">
-                    <MessageSquare className="h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link to="/profile">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={user.avatar_url} alt="Profile" />
-                    <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                </Link>
-                <Button className="rounded-full" onClick={handleLogout}>
-                  Abmelden
-                </Button>
-              </div>
-            ) : (
+            <Link to="/wie-es-funktioniert" className="text-gray-600 hover:text-gray-900">Wie es funktioniert</Link>
+            <Link to="/kontakt" className="text-gray-600 hover:text-gray-900">Kontakt</Link>
+            <Link to="/ueber-uns" className="text-gray-600 hover:text-gray-900">Über uns</Link>
+            {!user ? (
               <>
                 <Button variant="ghost" className="rounded-full" onClick={() => setIsSignupOpen(true)}>
                   Registrieren
@@ -86,6 +71,18 @@ const Navbar = () => {
                   Anmelden
                 </Button>
               </>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Button className="rounded-full" onClick={handleLogout}>
+                  Abmelden
+                </Button>
+                <Link to="/profile">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.avatar_url} alt="Profile" />
+                    <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </Link>
+              </div>
             )}
           </div>
         </div>
