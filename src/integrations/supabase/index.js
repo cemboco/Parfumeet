@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { useUser, useUsers, useAddUser, useUpdateUser, useDeleteUser } from './hooks/useUser';
+import { sendMessage, getMessages } from './messages';
 
 export {
     supabase,
@@ -7,5 +8,7 @@ export {
     useUsers,
     useAddUser,
     useUpdateUser,
-    useDeleteUser
+    useDeleteUser,
+    sendMessage,
+    getMessages
 };
