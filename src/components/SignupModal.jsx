@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,13 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
   const [signupStatus, setSignupStatus] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    const loadCaptcha = async () => {
+      await supabase.auth.initialize();
+    };
+    loadCaptcha();
+  }, []);
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setSignupStatus('loading');
@@ -25,12 +32,12 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           data: {
             name: name,
           },
+          captchaToken: await supabase.auth.createCaptcha(),
         },
       });
 
       if (error) throw error;
 
-      // If signup is successful, update the user's profile with their name
       if (data.user) {
         const { error: profileError } = await supabase
           .from('profiles')
