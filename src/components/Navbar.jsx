@@ -17,10 +17,10 @@ const Navbar = () => {
             <Link to="/kontakt" className="text-gray-600 hover:text-gray-900">Kontakt</Link>
             <Link to="/ueber-uns" className="text-gray-600 hover:text-gray-900">Über uns</Link>
             <Button variant="ghost" className="rounded-full">
-              Sign Up
+              Registrieren
             </Button>
             <Button className="rounded-full">
-              Login
+              Anmelden
             </Button>
           </div>
         </div>
