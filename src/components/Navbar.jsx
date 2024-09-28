@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SignupModal from './SignupModal';
 import LoginModal from './LoginModal';
 import { supabase } from '../integrations/supabase/supabase';
+import { MessageSquare, Settings } from 'lucide-react';
 
 const Navbar = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -76,6 +77,16 @@ const Navbar = () => {
                 <Button className="rounded-full" onClick={handleLogout}>
                   Abmelden
                 </Button>
+                <Link to="/messages">
+                  <Button variant="ghost" size="icon">
+                    <MessageSquare className="h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link to="/settings">
+                  <Button variant="ghost" size="icon">
+                    <Settings className="h-5 w-5" />
+                  </Button>
+                </Link>
                 <Link to="/profile">
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={user.avatar_url} alt="Profile" />
