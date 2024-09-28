@@ -14,7 +14,7 @@ const perfumeShops = [
 
 const Index = () => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <BackgroundSlideshow />
       <div className="flex flex-col items-center justify-center min-h-screen bg-black bg-opacity-50 text-white">
         <h1 className="text-6xl font-bold mb-5">Parfumeet</h1>
@@ -51,7 +51,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
