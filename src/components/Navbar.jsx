@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import SignupModal from './SignupModal';
+import LoginModal from './LoginModal';
 
 const Navbar = () => {
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,15 +21,17 @@ const Navbar = () => {
             <Link to="/wie-es-funktioniert" className="text-gray-600 hover:text-gray-900">Wie es funktioniert</Link>
             <Link to="/kontakt" className="text-gray-600 hover:text-gray-900">Kontakt</Link>
             <Link to="/ueber-uns" className="text-gray-600 hover:text-gray-900">Über uns</Link>
-            <Button variant="ghost" className="rounded-full">
+            <Button variant="ghost" className="rounded-full" onClick={() => setIsSignupOpen(true)}>
               Registrieren
             </Button>
-            <Button className="rounded-full">
+            <Button className="rounded-full" onClick={() => setIsLoginOpen(true)}>
               Anmelden
             </Button>
           </div>
         </div>
       </div>
+      <SignupModal open={isSignupOpen} onOpenChange={setIsSignupOpen} />
+      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} />
     </nav>
   );
 };

@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const LoginModal = ({ open, onOpenChange }) => {
+const SignupModal = ({ open, onOpenChange }) => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    // Implement login logic here
-    console.log('Login:', { email, password });
+    // Implement signup logic here
+    console.log('Signup:', { email, name, password });
     onOpenChange(false);
   };
 
@@ -19,9 +20,9 @@ const LoginModal = ({ open, onOpenChange }) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Anmelden</DialogTitle>
+          <DialogTitle>Registrieren</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">E-Mail</Label>
             <Input
@@ -29,6 +30,17 @@ const LoginModal = ({ open, onOpenChange }) => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+              className="rounded-full"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
               className="rounded-full"
             />
@@ -44,11 +56,11 @@ const LoginModal = ({ open, onOpenChange }) => {
               className="rounded-full"
             />
           </div>
-          <Button type="submit" className="w-full rounded-full">Anmelden</Button>
+          <Button type="submit" className="w-full rounded-full">Registrieren</Button>
         </form>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default LoginModal;
+export default SignupModal;
