@@ -61,7 +61,7 @@ const LoginModal = ({ open, onOpenChange, onSwitchToSignup }) => {
           </div>
           <Button 
             type="submit" 
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-midnight-blue hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="w-full py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-midnight-blue hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Anmelden
           </Button>
