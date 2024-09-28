@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { fragranceNotes } from '../data/fragranceNotes';
 import { initializeLocalStorage, getFragranceSuggestions } from '../utils/fragranceUtils';
+import SearchResultItem from '../components/SearchResultItem';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,6 +12,7 @@ const Search = () => {
   const [filters, setFilters] = useState(
     Object.fromEntries(fragranceNotes.map(note => [note.toLowerCase(), false]))
   );
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     initializeLocalStorage();
@@ -35,8 +37,13 @@ const Search = () => {
   };
 
   const handleSearch = () => {
-    // Implement search functionality here
-    console.log('Searching with term:', searchTerm, 'and filters:', filters);
+    // Simulated search results
+    const simulatedResults = [
+      { id: 1, profilePhoto: "/placeholder.svg", name: "Anna Müller", perfume: searchTerm, location: "Berlin, 5 km entfernt" },
+      { id: 2, profilePhoto: "/placeholder.svg", name: "Max Schmidt", perfume: searchTerm, location: "München, 2 km entfernt" },
+      { id: 3, profilePhoto: "/placeholder.svg", name: "Lisa Weber", perfume: searchTerm, location: "Hamburg, 8 km entfernt" },
+    ];
+    setSearchResults(simulatedResults);
   };
 
   return (
@@ -87,10 +94,17 @@ const Search = () => {
       <Button onClick={handleSearch} className="mb-4 rounded-full">Suchen</Button>
       
       <h3 className="text-xl font-semibold mb-2 text-foreground">Suchergebnisse</h3>
-      <ul className="list-disc list-inside space-y-2 text-foreground">
-        <li>Parfum 1 (Nutzer: Anna, Standort: 5 km entfernt)</li>
-        <li>Parfum 2 (Nutzer: Max, Standort: 2 km entfernt)</li>
-      </ul>
+      <div className="w-full max-w-md">
+        {searchResults.map((result) => (
+          <SearchResultItem
+            key={result.id}
+            profilePhoto={result.profilePhoto}
+            name={result.name}
+            perfume={result.perfume}
+            location={result.location}
+          />
+        ))}
+      </div>
     </div>
   );
 };
