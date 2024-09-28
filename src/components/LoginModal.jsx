@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
-const LoginModal = ({ open, onOpenChange }) => {
+const LoginModal = ({ open, onOpenChange, onSwitchToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +67,7 @@ const LoginModal = ({ open, onOpenChange }) => {
           </Button>
         </form>
         <p className="mt-4 text-sm text-gray-600 text-center">
-          Noch kein Konto? <a href="#" className="font-medium text-midnight-blue hover:text-blue-800" onClick={() => onOpenChange(false)}>Registrieren</a>
+          Noch kein Konto? <a href="#" className="font-medium text-midnight-blue hover:text-blue-800" onClick={onSwitchToSignup}>Registrieren</a>
         </p>
       </DialogContent>
     </Dialog>

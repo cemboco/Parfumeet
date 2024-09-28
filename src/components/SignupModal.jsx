@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from '../integrations/supabase/supabase';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
-const SignupModal = ({ open, onOpenChange }) => {
+const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupStatus, setSignupStatus] = useState('');
@@ -97,7 +97,7 @@ const SignupModal = ({ open, onOpenChange }) => {
           </p>
         )}
         <p className="mt-4 text-sm text-gray-600 text-center">
-          Bereits registriert? <a href="#" className="font-medium text-green-600 hover:text-green-500" onClick={() => onOpenChange(false)}>Anmelden</a>
+          Bereits registriert? <a href="#" className="font-medium text-green-600 hover:text-green-500" onClick={onSwitchToLogin}>Anmelden</a>
         </p>
       </DialogContent>
     </Dialog>

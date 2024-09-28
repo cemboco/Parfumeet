@@ -50,6 +50,16 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const handleSwitchToLogin = () => {
+    setIsSignupOpen(false);
+    setIsLoginOpen(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setIsLoginOpen(false);
+    setIsSignupOpen(true);
+  };
+
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,8 +108,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <SignupModal open={isSignupOpen} onOpenChange={setIsSignupOpen} />
-      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} />
+      <SignupModal open={isSignupOpen} onOpenChange={setIsSignupOpen} onSwitchToLogin={handleSwitchToLogin} />
+      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} onSwitchToSignup={handleSwitchToSignup} />
     </nav>
   );
 };
