@@ -5,12 +5,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, MapPin, AlertTriangle, Plus, X, Settings, MessageSquare } from "lucide-react";
 import SettingsDialog from '../components/SettingsDialog';
+import MessageModal from '../components/MessageModal';
 import { supabase } from '../integrations/supabase/supabase';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [profile, setProfile] = useState({
+    id: "",
     name: "",
     location: "",
     about: "",
@@ -127,8 +130,7 @@ const Profile = () => {
   };
 
   const handleSendMessage = () => {
-    console.log("Send message to:", profile.name);
-    // Implement actual messaging functionality here
+    setIsMessageModalOpen(true);
   };
 
   const isOwnProfile = currentUser && profile.id === currentUser.id;
@@ -272,6 +274,12 @@ const Profile = () => {
         </div>
       </div>
       <SettingsDialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen} />
+      <MessageModal
+        open={isMessageModalOpen}
+        onOpenChange={setIsMessageModalOpen}
+        recipientId={profile.id}
+        recipientName={profile.name}
+      />
     </div>
   );
 };
