@@ -7,6 +7,7 @@ import { supabase } from '../integrations/supabase/supabase';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupStatus, setSignupStatus] = useState('');
@@ -20,9 +21,23 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            name: name,
+          },
+        },
       });
 
       if (error) throw error;
+
+      // If signup is successful, update the user's profile with their name
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .upsert({ id: data.user.id, name: name });
+
+        if (profileError) throw profileError;
+      }
 
       setSignupStatus('success');
     } catch (error) {
@@ -43,6 +58,17 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
         </DialogHeader>
         <p className="text-gray-600 mb-6">Registriere dich, um deine Düfte zu teilen und neue zu entdecken.</p>
         <form onSubmit={handleSignup} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium text-gray-700">Name *</Label>
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-gray-700">E-Mail *</Label>
             <Input
