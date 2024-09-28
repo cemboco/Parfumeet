@@ -6,14 +6,16 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-24">
+        <div className="flex justify-between items-center h-24">
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center">
               <img src="/Parfumeet.png" alt="Parfumeet Logo" className="h-20 w-auto" />
             </Link>
           </div>
-          <div className="flex items-center">
-            <Button variant="ghost" className="mr-2 rounded-full">
+          <div className="flex items-center space-x-4">
+            <Link to="/kontakt" className="text-gray-600 hover:text-gray-900">Kontakt</Link>
+            <Link to="/ueber-uns" className="text-gray-600 hover:text-gray-900">Über uns</Link>
+            <Button variant="ghost" className="rounded-full">
               Sign Up
             </Button>
             <Button className="rounded-full">
