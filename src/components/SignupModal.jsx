@@ -3,17 +3,36 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from '../integrations/supabase/supabase';
 
 const SignupModal = ({ open, onOpenChange }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [signupStatus, setSignupStatus] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Implement signup logic here
-    console.log('Signup:', { email, name, password });
-    onOpenChange(false);
+    setSignupStatus('loading');
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      setSignupStatus('success');
+    } catch (error) {
+      console.error('Error signing up:', error.message);
+      setSignupStatus('error');
+    }
   };
 
   return (
@@ -56,8 +75,20 @@ const SignupModal = ({ open, onOpenChange }) => {
               className="rounded-full"
             />
           </div>
-          <Button type="submit" className="w-full rounded-full">Registrieren</Button>
+          <Button type="submit" className="w-full rounded-full" disabled={signupStatus === 'loading'}>
+            {signupStatus === 'loading' ? 'Registrierung läuft...' : 'Registrieren'}
+          </Button>
         </form>
+        {signupStatus === 'success' && (
+          <p className="mt-4 text-green-600">
+            Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mail für den Bestätigungslink.
+          </p>
+        )}
+        {signupStatus === 'error' && (
+          <p className="mt-4 text-red-600">
+            Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.
+          </p>
+        )}
       </DialogContent>
     </Dialog>
   );
