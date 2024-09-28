@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import BackgroundSlideshow from '../components/BackgroundSlideshow';
+import MapComponent from '../components/MapComponent';
 
 const Index = () => {
   return (
@@ -21,6 +22,12 @@ const Index = () => {
           </Link>
         </div>
       </div>
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Entdecke Düfte in deiner Nähe</h2>
+          <MapComponent />
+        </div>
+      </section>
     </>
   );
 };
