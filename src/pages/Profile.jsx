@@ -1,42 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, MapPin, AlertTriangle, Plus, X, Settings } from "lucide-react";
 import SettingsDialog from '../components/SettingsDialog';
+import { supabase } from '../integrations/supabase/supabase';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [profile, setProfile] = useState({
-    name: "Cemil Bocohonsi",
-    location: "Berlin, Deutschland",
-    about: "Parfüm-Enthusiast mit einer Vorliebe für holzige und orientalische Düfte. Immer auf der Suche nach neuen olfaktorischen Erlebnissen!",
-    gender: "männlich",
-    collection: [
-      { name: "Parfum 1", image: "/placeholder.svg" },
-      { name: "Parfum 2", image: "/placeholder.svg" },
-      { name: "Parfum 3", image: "/placeholder.svg" },
-    ],
-    profilePicture: "/placeholder.svg"
+    name: "",
+    location: "",
+    about: "",
+    gender: "",
+    collection: [],
+    avatar_url: ""
   });
   const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
 
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+      } else if (data) {
+        setProfile(data);
+      }
+    }
+  };
+
   const handleEdit = () => setIsEditing(true);
-  const handleSave = () => {
-    setIsEditing(false);
-    console.log("Saving profile:", profile);
+  const handleSave = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({ id: user.id, ...profile });
+
+      if (error) {
+        console.error('Error updating profile:', error);
+      } else {
+        setIsEditing(false);
+      }
+    }
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profilePicture" && files[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => setProfile({ ...profile, profilePicture: reader.result });
-      reader.readAsDataURL(files[0]);
-    } else {
-      setProfile({ ...profile, [name]: value });
-    }
+    const { name, value } = e.target;
+    setProfile({ ...profile, [name]: value });
   };
 
   const handleAddPerfume = () => {
@@ -54,6 +77,39 @@ const Profile = () => {
     setProfile({ ...profile, collection: updatedCollection });
   };
 
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    const { data: { user } } = await supabase.auth.getUser();
+    if (file && user) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}${Math.random()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(fileName, file);
+
+      if (uploadError) {
+        console.error('Error uploading avatar:', uploadError);
+      } else {
+        const { data: { publicUrl }, error: urlError } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+
+        if (urlError) {
+          console.error('Error getting public URL:', urlError);
+        } else {
+          setProfile({ ...profile, avatar_url: publicUrl });
+          const { error: updateError } = await supabase
+            .from('profiles')
+            .upsert({ id: user.id, avatar_url: publicUrl });
+
+          if (updateError) {
+            console.error('Error updating profile with new avatar:', updateError);
+          }
+        }
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow w-full max-w-2xl mx-auto p-4 pt-8 relative">
@@ -68,19 +124,18 @@ const Profile = () => {
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-start mb-6">
             <div className="relative mr-4">
-              <img 
-                src={profile.profilePicture} 
-                alt="Profilbild" 
-                className="w-24 h-24 rounded-full object-cover"
-              />
+              <Avatar className="w-24 h-24">
+                <AvatarImage src={profile.avatar_url} alt="Profilbild" />
+                <AvatarFallback>{profile.name ? profile.name[0].toUpperCase() : 'U'}</AvatarFallback>
+              </Avatar>
               {isEditing && (
-                <label htmlFor="profilePicture" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
-                  <Camera className="w-8 h-8 text-blue-900" />
+                <label htmlFor="avatar" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
+                  <Camera className="w-8 h-8 text-white" />
                   <Input
                     type="file"
-                    id="profilePicture"
-                    name="profilePicture"
-                    onChange={handleChange}
+                    id="avatar"
+                    name="avatar"
+                    onChange={handleAvatarChange}
                     accept="image/*"
                     className="hidden"
                   />
