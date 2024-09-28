@@ -16,7 +16,7 @@ const Index = () => {
           </Link>
           <Link to="/profile">
             <Button className="w-full bg-transparent border border-white hover:bg-gray-200 hover:text-black transition-colors rounded-full">
-              Erstelle dein Profil
+              Erstelle ein Profil
             </Button>
           </Link>
         </div>
