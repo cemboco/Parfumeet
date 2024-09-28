@@ -24,7 +24,7 @@ const Index = () => {
       </div>
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Entdecke Düfte in deiner Nähe</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">Entdecke Düfte in Stuttgart</h2>
           <MapComponent />
         </div>
       </section>

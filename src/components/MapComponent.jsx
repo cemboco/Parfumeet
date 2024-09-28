@@ -17,17 +17,18 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const MapComponent = () => {
-  const position = [51.505, -0.09]; // Default to London
+  // Stuttgart coordinates
+  const position = [48.7758, 9.1829];
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '400px', width: '100%' }}>
+    <MapContainer center={position} zoom={12} style={{ height: '400px', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <Marker position={position}>
         <Popup>
-          A sample location. <br /> You can customize this.
+          Stuttgart, Germany <br /> Discover fragrances in this beautiful city!
         </Popup>
       </Marker>
     </MapContainer>
