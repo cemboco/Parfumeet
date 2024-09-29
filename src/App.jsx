@@ -8,6 +8,7 @@ import Index from './pages/Index';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import CreateProfile from './pages/CreateProfile';
+import ProfileView from './pages/ProfileView';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-profile" element={<CreateProfile />} />
+            <Route path="/profile-view" element={<ProfileView />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

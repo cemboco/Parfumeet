@@ -15,7 +15,7 @@ const CreateProfile = () => {
     about: '',
     gender: '',
   });
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,9 +32,15 @@ const CreateProfile = () => {
     }));
   };
 
-  const handleProfilePictureChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
-    setProfilePicture(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -42,32 +48,11 @@ const CreateProfile = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        let profileData = { ...profile, id: user.id };
+        const profileData = { ...profile, id: user.id, avatarUrl };
 
-        if (profilePicture) {
-          const fileExt = profilePicture.name.split('.').pop();
-          const fileName = `${user.id}${Math.random()}.${fileExt}`;
-          const { data, error } = await supabase.storage
-            .from('profile-pictures')
-            .upload(fileName, profilePicture);
-
-          if (error) throw error;
-
-          const { data: { publicUrl }, error: urlError } = supabase.storage
-            .from('profile-pictures')
-            .getPublicUrl(fileName);
-
-          if (urlError) throw urlError;
-
-          profileData.avatar_url = publicUrl;
-        }
-
-        const { error } = await supabase
-          .from('profiles')
-          .upsert(profileData);
-
-        if (error) throw error;
-        navigate('/profile');
+        // Here you would typically save the profile data to your backend
+        // For now, we'll just navigate to the new ProfileView page
+        navigate('/profile-view', { state: { profile: profileData } });
       }
     } catch (error) {
       console.error('Error creating profile:', error.message);
@@ -81,18 +66,18 @@ const CreateProfile = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex justify-center">
             <Avatar className="w-24 h-24">
-              <AvatarImage src={profilePicture ? URL.createObjectURL(profilePicture) : ''} />
-              <AvatarFallback>PB</AvatarFallback>
+              <AvatarImage src={avatarUrl} alt="Profile" />
+              <AvatarFallback>{profile.name ? profile.name[0].toUpperCase() : 'P'}</AvatarFallback>
             </Avatar>
           </div>
           <div>
-            <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">Profilbild</label>
+            <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">Profilbild</label>
             <Input
-              id="profilePicture"
-              name="profilePicture"
+              id="avatar"
+              name="avatar"
               type="file"
               accept="image/*"
-              onChange={handleProfilePictureChange}
+              onChange={handleAvatarChange}
               className="mt-1"
             />
           </div>
