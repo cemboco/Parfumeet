@@ -7,6 +7,7 @@ import { Camera, MapPin, AlertTriangle, Plus, X, Settings, MessageSquare } from 
 import SettingsDialog from '../components/SettingsDialog';
 import MessageModal from '../components/MessageModal';
 import { supabase } from '../integrations/supabase/supabase';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +24,7 @@ const Profile = () => {
   });
   const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
   const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
@@ -52,6 +54,7 @@ const Profile = () => {
   };
 
   const handleEdit = () => setIsEditing(true);
+
   const handleSave = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
@@ -63,6 +66,8 @@ const Profile = () => {
         console.error('Error updating profile:', error);
       } else {
         setIsEditing(false);
+        // Navigate to the profile page after saving
+        navigate('/profile');
       }
     }
   };
@@ -269,7 +274,7 @@ const Profile = () => {
               onClick={isEditing ? handleSave : handleEdit} 
               className="w-full rounded-full"
             >
-              {isEditing ? 'Speichern' : 'Profil bearbeiten'}
+              {isEditing ? 'Profil erstellen' : 'Profil bearbeiten'}
             </Button>
           )}
         </div>
