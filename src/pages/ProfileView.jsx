@@ -1,19 +1,33 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MapPin } from "lucide-react";
+import { MapPin, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const ProfileView = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const profile = location.state?.profile;
 
   if (!profile) {
     return <div className="text-center mt-20">No profile data available.</div>;
   }
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
-      <div className="w-full max-w-md space-y-8 bg-white shadow-lg rounded-lg p-6 mt-20">
+      <div className="w-full max-w-md space-y-8 bg-white shadow-lg rounded-lg p-6 mt-20 relative">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 left-4"
+          onClick={handleGoBack}
+        >
+          <ArrowLeft className="h-6 w-6" />
+        </Button>
         <h2 className="text-2xl font-bold mb-4 text-center text-foreground">Dein Profil</h2>
         <div className="flex flex-col items-center space-y-4">
           <Avatar className="w-24 h-24">
