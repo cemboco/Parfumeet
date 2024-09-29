@@ -49,7 +49,7 @@ const CreateProfile = () => {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-24">
-      <h2 className="text-2xl font-bold mb-4 text-foreground">Erstelle dein Profil</h2>
+      <h2 className="text-2xl font-bold mb-4 text-foreground">Seite 2: Erstelle dein Profil</h2>
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
