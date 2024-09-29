@@ -47,8 +47,8 @@ const Search = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4">
-      <h2 className="text-2xl font-bold mb-4 text-foreground">Parfums suchen</h2>
+    <div className="flex flex-col items-center justify-start min-h-screen bg-background p-4 pt-24">
+      <h2 className="text-2xl font-bold mb-4 text-foreground">Finde deinen Duft</h2>
       <div className="relative w-full max-w-md">
         <Input
           type="text"

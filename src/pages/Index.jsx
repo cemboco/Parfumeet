@@ -47,7 +47,7 @@ const Index = () => {
           <Link to="/search" className="block mb-2">
             <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-full">Finde deinen Duft</Button>
           </Link>
-          <Link to="/profile">
+          <Link to="/create-profile">
             <Button className="w-full bg-transparent border border-white hover:bg-gray-200 hover:text-black transition-colors rounded-full">
               Erstelle ein Profil
             </Button>
