@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from '../integrations/supabase/supabase';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "sonner";
 
 const CreateProfile = () => {
   const navigate = useNavigate();
@@ -51,11 +52,13 @@ const CreateProfile = () => {
         const profileData = { ...profile, id: user.id, avatarUrl };
 
         // Here you would typically save the profile data to your backend
-        // For now, we'll just navigate to the new ProfileView page
+        // For demonstration, we'll just show the toast and navigate
+        toast.success("Profil gespeichert");
         navigate('/profile-view', { state: { profile: profileData } });
       }
     } catch (error) {
       console.error('Error creating profile:', error.message);
+      toast.error("Fehler beim Speichern des Profils");
     }
   };
 
