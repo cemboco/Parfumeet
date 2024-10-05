@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import BackgroundSlideshow from '../components/BackgroundSlideshow';
 import MapComponent from '../components/MapComponent';
 import { User, MapPin, MessageSquare, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const perfumeShops = [
   { name: "Douglas", address: "Königstraße 44, 70173 Stuttgart", coordinates: [48.7758, 9.1754] },
@@ -80,11 +81,19 @@ const Index = () => {
           <h2 className="text-3xl font-bold mb-12 text-center">Dienste, die wir anbieten</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="flex flex-col items-center text-center">
+              <motion.div
+                key={index}
+                className="flex flex-col items-center text-center"
+                whileHover={{
+                  scale: 1.05,
+                  rotate: [-1, 1, -1, 0],
+                  transition: { duration: 0.3 }
+                }}
+              >
                 {service.icon}
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                 <p className="text-gray-600">{service.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
