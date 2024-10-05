@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from '../integrations/supabase/supabase';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { toast } from 'sonner';
 
 const CreateProfile = () => {
   const navigate = useNavigate();
@@ -50,21 +51,26 @@ const CreateProfile = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        const profileData = { ...profile, id: user.id, avatarUrl };
+        const { error } = await supabase
+          .from('profiles')
+          .upsert({ 
+            id: user.id, 
+            ...profile,
+            avatar_url: avatarUrl 
+          });
 
-        // Here you would typically save the profile data to your backend
-        // For demonstration, we'll just open the modal
+        if (error) throw error;
         setIsModalOpen(true);
       }
     } catch (error) {
       console.error('Error creating profile:', error.message);
-      // You might want to show an error message here
+      toast.error('Failed to create profile. Please try again.');
     }
   };
 
   const handleConfirm = () => {
     setIsModalOpen(false);
-    navigate('/profile-view', { state: { profile: { ...profile, avatarUrl } } });
+    navigate('/profile');
   };
 
   return (

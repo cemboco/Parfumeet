@@ -8,6 +8,8 @@ import SettingsDialog from '../components/SettingsDialog';
 import MessageModal from '../components/MessageModal';
 import { supabase } from '../integrations/supabase/supabase';
 import { useNavigate } from 'react-router-dom';
+import ProfileDetails from '../components/ProfileDetails';
+import ProfileCollection from '../components/ProfileCollection';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +24,6 @@ const Profile = () => {
     collection: [],
     avatar_url: ""
   });
-  const [newPerfume, setNewPerfume] = useState({ name: "", image: "" });
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
@@ -66,8 +67,6 @@ const Profile = () => {
         console.error('Error updating profile:', error);
       } else {
         setIsEditing(false);
-        // Navigate to the profile page after saving
-        navigate('/profile');
       }
     }
   };
@@ -77,21 +76,7 @@ const Profile = () => {
     setProfile({ ...profile, [name]: value });
   };
 
-  const handleAddPerfume = () => {
-    if (newPerfume.name.trim() !== "") {
-      setProfile({
-        ...profile,
-        collection: [...profile.collection, { ...newPerfume, image: newPerfume.image || "/placeholder.svg" }]
-      });
-      setNewPerfume({ name: "", image: "" });
-    }
-  };
-
-  const handleRemovePerfume = (index) => {
-    const updatedCollection = profile.collection.filter((_, i) => i !== index);
-    setProfile({ ...profile, collection: updatedCollection });
-  };
-
+  const handleAvatarChange = async (e) => {
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     const { data: { user } } = await supabase.auth.getUser();
@@ -124,18 +109,6 @@ const Profile = () => {
       }
     }
   };
-
-  const getInitials = (name) => {
-    return name
-      .split(' ')
-      .map(word => word[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const handleSendMessage = () => {
-    setIsMessageModalOpen(true);
   };
 
   const isOwnProfile = currentUser && profile.id === currentUser.id;
@@ -155,7 +128,7 @@ const Profile = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleSendMessage}
+              onClick={() => setIsMessageModalOpen(true)}
             >
               <MessageSquare className="h-6 w-6" />
             </Button>
@@ -166,7 +139,7 @@ const Profile = () => {
             <div className="relative mr-4">
               <Avatar className="w-24 h-24">
                 <AvatarImage src={profile.avatar_url} alt="Profilbild" />
-                <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
+                <AvatarFallback>{profile.name ? profile.name[0].toUpperCase() : 'P'}</AvatarFallback>
               </Avatar>
               {isEditing && (
                 <label htmlFor="avatar" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full cursor-pointer">
@@ -195,86 +168,15 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold mb-2">Über mich</h3>
-            {isEditing ? (
-              <Textarea
-                name="about"
-                value={profile.about}
-                onChange={handleChange}
-                className="w-full rounded-lg"
-              />
-            ) : (
-              <p>{profile.about}</p>
-            )}
-          </div>
-
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold mb-2">Profil-Details</h3>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <p className="font-medium">Geschlecht:</p>
-                {isEditing ? (
-                  <Input
-                    name="gender"
-                    value={profile.gender}
-                    onChange={handleChange}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <p>{profile.gender}</p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <h3 className="text-xl font-semibold mb-2">Meine Sammlung</h3>
-            <div className="grid grid-cols-3 gap-4">
-              {profile.collection.map((item, index) => (
-                <div key={index} className="bg-gray-100 p-4 rounded-lg relative">
-                  <img src={item.image} alt={item.name} className="w-full h-32 object-cover mb-2 rounded-lg" />
-                  <p className="text-center">{item.name}</p>
-                  {isEditing && (
-                    <button
-                      onClick={() => handleRemovePerfume(index)}
-                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-              ))}
-              {isEditing && (
-                <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center justify-center">
-                  <Input
-                    type="text"
-                    value={newPerfume.name}
-                    onChange={(e) => setNewPerfume({ ...newPerfume, name: e.target.value })}
-                    placeholder="Neues Parfum"
-                    className="mb-2 rounded-full"
-                  />
-                  <Input
-                    type="text"
-                    value={newPerfume.image}
-                    onChange={(e) => setNewPerfume({ ...newPerfume, image: e.target.value })}
-                    placeholder="Bild-URL"
-                    className="mb-2 rounded-full"
-                  />
-                  <Button onClick={handleAddPerfume} className="w-full rounded-full">
-                    <Plus className="w-4 h-4 mr-2" /> Hinzufügen
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
+          <ProfileDetails profile={profile} isEditing={isEditing} handleChange={handleChange} />
+          <ProfileCollection profile={profile} isEditing={isEditing} setProfile={setProfile} />
 
           {isOwnProfile && (
             <Button 
               onClick={isEditing ? handleSave : handleEdit} 
-              className="w-full rounded-full"
+              className="w-full rounded-full mt-4"
             >
-              {isEditing ? 'Profil erstellen' : 'Profil bearbeiten'}
+              {isEditing ? 'Änderungen speichern' : 'Profil bearbeiten'}
             </Button>
           )}
         </div>
