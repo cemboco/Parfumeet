@@ -23,7 +23,16 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = async (data) => {
+  const validateForm = (data) => {
+    // The form is already validated by react-hook-form and zod
+    // This function can be used for any additional custom validation if needed
+    return true;
+  };
+
+  const handleSubmit = async (data, e) => {
+    e.preventDefault();
+    if (!validateForm(data)) return;
+
     setSignupStatus('loading');
 
     try {
@@ -31,21 +40,28 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
         email: data.email,
         password: data.password,
         options: {
-          data: {
-            name: data.name,
-          },
+          data: { name: data.name },
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Detailed error:', error);
+        throw error;
+      }
 
       if (authData.user) {
         setSignupStatus('success');
+      } else {
+        // This case handles when data.user is null but no error was thrown
+        console.error('No user data returned:', authData);
+        setSignupStatus('error');
       }
     } catch (error) {
-      console.error('Error signing up:', error.message);
+      console.error('Error signing up:', error.message, error.status);
       setSignupStatus('error');
+      // Display more specific error message
+      alert(`Fehler bei der Registrierung: ${error.message}`);
     }
   };
 
@@ -60,7 +76,7 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           <DialogTitle className="text-2xl font-bold mb-4">Willkommen bei Parfumeet</DialogTitle>
         </DialogHeader>
         <p className="text-gray-600 mb-6">Registriere dich, um deine Düfte zu teilen und neue zu entdecken.</p>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium text-gray-700">Name *</Label>
             <Input
