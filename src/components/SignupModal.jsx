@@ -5,35 +5,44 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from '../integrations/supabase/supabase';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const signupSchema = z.object({
+  name: z.string().min(2, { message: "Name muss mindestens 2 Zeichen lang sein" }),
+  email: z.string().email({ message: "Ungültige E-Mail-Adresse" }),
+  password: z.string().min(6, { message: "Passwort muss mindestens 6 Zeichen lang sein" }),
+});
 
 const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [signupStatus, setSignupStatus] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit = async (data) => {
     setSignupStatus('loading');
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
+      const { data: authData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
         options: {
           data: {
-            name: name,
+            name: data.name,
           },
         },
       });
 
       if (error) throw error;
 
-      if (data.user) {
+      if (authData.user) {
         const { error: profileError } = await supabase
           .from('profiles')
-          .upsert({ id: data.user.id, name: name });
+          .upsert({ id: authData.user.id, name: data.name });
 
         if (profileError) throw profileError;
 
@@ -56,28 +65,26 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           <DialogTitle className="text-2xl font-bold mb-4">Willkommen bei Parfumeet</DialogTitle>
         </DialogHeader>
         <p className="text-gray-600 mb-6">Registriere dich, um deine Düfte zu teilen und neue zu entdecken.</p>
-        <form onSubmit={handleSignup} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium text-gray-700">Name *</Label>
             <Input
               id="name"
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
+              {...register('name')}
               className="w-full p-2 border border-gray-300 rounded-md"
             />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium text-gray-700">E-Mail *</Label>
             <Input
               id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register('email')}
               className="w-full p-2 border border-gray-300 rounded-md"
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password" className="text-sm font-medium text-gray-700">Passwort *</Label>
@@ -85,9 +92,7 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                {...register('password')}
                 className="w-full p-2 border border-gray-300 rounded-md pr-10"
               />
               <button
@@ -102,6 +107,7 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
                 )}
               </button>
             </div>
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
           <Button 
             type="submit" 
