@@ -34,18 +34,13 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           data: {
             name: data.name,
           },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
       if (error) throw error;
 
       if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .upsert({ id: authData.user.id, name: data.name });
-
-        if (profileError) throw profileError;
-
         setSignupStatus('success');
       }
     } catch (error) {
