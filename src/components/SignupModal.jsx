@@ -29,7 +29,7 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
     return true;
   };
 
-  const handleSubmit = async (data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     if (!validateForm(data)) return;
 
@@ -76,7 +76,7 @@ const SignupModal = ({ open, onOpenChange, onSwitchToLogin }) => {
           <DialogTitle className="text-2xl font-bold mb-4">Willkommen bei Parfumeet</DialogTitle>
         </DialogHeader>
         <p className="text-gray-600 mb-6">Registriere dich, um deine Düfte zu teilen und neue zu entdecken.</p>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium text-gray-700">Name *</Label>
             <Input
