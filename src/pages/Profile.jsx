@@ -77,7 +77,6 @@ const Profile = () => {
   };
 
   const handleAvatarChange = async (e) => {
-  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     const { data: { user } } = await supabase.auth.getUser();
     if (file && user) {
@@ -108,7 +107,6 @@ const Profile = () => {
         }
       }
     }
-  };
   };
 
   const isOwnProfile = currentUser && profile.id === currentUser.id;
