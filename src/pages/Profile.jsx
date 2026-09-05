@@ -108,7 +108,6 @@ const Profile = () => {
       }
     }
   };
-  };
 
   const isOwnProfile = currentUser && profile.id === currentUser.id;
 
